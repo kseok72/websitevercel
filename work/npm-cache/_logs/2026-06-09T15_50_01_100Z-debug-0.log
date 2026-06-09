@@ -1,0 +1,18 @@
+0 verbose cli C:\Users\경석\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated\work\npm\package\bin\npm-cli.js
+1 info using npm@11.16.0
+2 info using node@v24.14.0
+3 silly config load:file:C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated\work\npm\package\npmrc
+4 silly config load:file:C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated\.npmrc
+5 silly config load:file:C:\Users\경석\.npmrc
+6 silly config load:file:C:\Users\경석\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\etc\npmrc
+7 verbose title npm run build
+8 verbose argv "run" "build" "--cache" ".\\work\\npm-cache"
+9 verbose logfile logs-max:10 dir:C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated\work\npm-cache\_logs\2026-06-09T15_50_01_100Z-
+10 verbose logfile C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated\work\npm-cache\_logs\2026-06-09T15_50_01_100Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose cwd C:\Users\경석\Documents\Codex\2026-06-10\3-vercel-plugin-vercel-openai-curated
+13 verbose os Windows_NT 10.0.26200
+14 verbose node v24.14.0
+15 verbose npm  v11.16.0
+16 verbose exit 0
+17 info ok
