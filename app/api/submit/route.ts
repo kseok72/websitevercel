@@ -1,5 +1,7 @@
+// app/api/submit/route.ts
 import { NextResponse } from "next/server";
 import { addSubmission, type SubmissionKind } from "@/app/lib/submissions";
+import { revalidateTag } from "next/cache"; // 1. 임포트 추가
 
 const kinds = new Set<SubmissionKind>(["tip", "worry"]);
 
@@ -27,6 +29,9 @@ export async function POST(request: Request) {
   }
 
   await addSubmission({ kind, body: text, nickname: nickname || undefined });
+
+  // 2. 글이 제출되면 'submissions'라는 이름의 캐시를 무효화시킵니다.
+  revalidateTag("submissions");
 
   return NextResponse.json({ ok: true });
 }
