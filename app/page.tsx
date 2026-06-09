@@ -11,7 +11,7 @@ export default function Home() {
             <span className="brand-mark">
               <Sprout size={20} aria-hidden="true" />
             </span>
-            꾸준한 수험 생
+            꾸준한 수험 생활!
           </Link>
           <div className="nav-links">
             <a href="#tips">수험 팁</a>
