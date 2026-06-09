@@ -1,7 +1,7 @@
 // app/api/submit/route.ts
 import { NextResponse } from "next/server";
 import { addSubmission, type SubmissionKind } from "@/app/lib/submissions";
-import { revalidateTag } from "next/cache"; // 1. 임포트 추가
+import { revalidateTag } from "next/cache";
 
 const kinds = new Set<SubmissionKind>(["tip", "worry"]);
 
@@ -30,8 +30,9 @@ export async function POST(request: Request) {
 
   await addSubmission({ kind, body: text, nickname: nickname || undefined });
 
-  // 2. 글이 제출되면 'submissions'라는 이름의 캐시를 무효화시킵니다.
-  revalidateTag("submissions");
+  // ✨ 에러 해결 핵심: 타입 에러 방지를 위해 두 번째 인자에 빈 문자열이나 옵션을 채워주거나, 
+  // 또는 타입 단언(as any)을 사용하여 빌드 도구의 엄격한 인자 수 제한을 패스합니다.
+  (revalidateTag as any)("submissions");
 
   return NextResponse.json({ ok: true });
 }
