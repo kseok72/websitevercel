@@ -117,10 +117,10 @@ export default function Home() {
                 <LockKeyhole size={20} aria-hidden="true" /> 관리자만 확인
               </h3>
               <p className="hint">
-                제출 목록은 관리자 비밀번호가 있어야 열립니다. Vercel 배포 시 환경변수와 Redis 저장소가 설정되어야 안전하게 보관됩니다.
+                관리자만 확인할 수 있습니다.
               </p>
               <Link className="button" href="/admin">
-                관리자 보관함
+                관리자 사이트 접근
               </Link>
             </div>
           </div>
