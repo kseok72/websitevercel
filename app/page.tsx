@@ -25,7 +25,7 @@ export default function Home() {
             <h1>꾸준한 수험생활에 도움이 되길.</h1>
           </div>
           <p>
-            수험생활에 도움이 되는 팁을 정리하고, 수험생활 관 고민을 익명으로 남길 수 있는 공간입니다.
+            수험생활에 도움이 되는 팁을 정리하고, 수험생활 고민을 익명으로 남길 수 있는 공간입니다.
           </p>
           <div className="hero-actions">
             <a className="button primary" href="#tips">
