@@ -1,6 +1,10 @@
 "use client";
-// 🍵 차 추천 퀴즈 데이터 정의 (2번째 줄에 삽입)
-const QUIZ_QUESTIONS = [
+// 🍵 여기 데이터 선언 부분에 타입을 명시해 줍니다!
+const QUIZ_QUESTIONS: {
+  id: number;
+  question: string;
+  options: { text: string; score: Record<string, number> }[];
+}[] = [
   {
     id: 1,
     question: "1. 지금 내 몸과 마음의 상태는 어떤가요?",
