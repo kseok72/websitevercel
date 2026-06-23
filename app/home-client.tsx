@@ -208,8 +208,6 @@ export default function HomeClient() {
       {/* [1] 원래 화면 상태: 기존 작성하신 폼 내용(고민 나누기, 꿀팁 공유)이 그대로 살아 움직입니다. */}
       {viewMode === 'form' && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <SubmissionForm kind="worry" label="😥 고민 나누기" placeholder="요즘 어떤 고민이 있으신가요? 마음껏 털어놓아 보세요." />
-          <SubmissionForm kind="tip" label="💡 공부 꿀팁 공유" placeholder="나만 알고 있는 효과적인 공부 비법을 알려주세요!" includeNickname />
         </div>
       )}
 
