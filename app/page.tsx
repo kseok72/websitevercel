@@ -5,25 +5,6 @@ import HomeClient from "./home-client"; // 1. 이 줄을 추가합니다.
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  return (
-    <main>
-      <div className="header">
-        <h1>수험 팁 & 의견 제출</h1>
-        <p>익명으로 자유롭게 의견을 나누거나 공부 팁을 공유해 주세요.</p>
-      </div>
-
-      <div className="container">
-        {/* 2. 기존 폼들 바로 위에 차 추천 퀴즈 탭으로 바꿀 수 있는 컴포넌트를 연동합니다. */}
-        <HomeClient />
-
-        <SubmissionForm kind="worry" label="😥 고민 나누기" placeholder="요즘 어떤 고민이 있으신가요? 마음껏 털어놓아 보세요." />
-        <SubmissionForm kind="tip" label="💡 공부 꿀팁 공유" placeholder="나만 알고 있는 효과적인 공부 비법을 알려주세요!" includeNickname />
-      </div>
-    </main>
-  );
-}
-
 export default function Home() {
   return (
     <main className="page-shell">
@@ -60,6 +41,8 @@ export default function Home() {
             </a>
           </div>
         </section>
+
+        <HomeClient />
 
 <section className="section" id="tips">
   <div className="section-header">
