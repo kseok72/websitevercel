@@ -1,5 +1,10 @@
 "use client";
-// 🍵 여기 데이터 선언 부분에 타입을 명시해 줍니다!
+
+import { useEffect, useState } from "react";
+
+type SubmitKind = "tip" | "worry";
+
+// 🍵 차 추천 퀴즈 문항 데이터 설정 (타입 에러 방지)
 const QUIZ_QUESTIONS: {
   id: number;
   question: string;
@@ -36,7 +41,6 @@ const QUIZ_QUESTIONS: {
   }
 ];
 
-// 🍵 차 추천 결과 데이터 정의
 const TEA_RESULTS: Record<string, { title: string; desc: string; icon: string }> = {
   camomile: { title: "캐모마일 (Chamomile)", desc: "마음이 편안해지는 대표적인 허브차입니다. 카페인이 없어 밤에 마시기 좋고 스트레스 완화와 숙면에 최고예요.", icon: "🌼" },
   peppermint: { title: "페퍼민트 (Peppermint)", desc: "정신이 번쩍 드는 청량한 차입니다. 식후 입안을 개운하게 해주고 소화를 도우며 집중력을 높여줍니다.", icon: "🌿" },
@@ -45,10 +49,8 @@ const TEA_RESULTS: Record<string, { title: string; desc: string; icon: string }>
   hibiscus: { title: "히비스커스 (Hibiscus)", desc: "새콤달콤한 맛과 붉은 수색이 매력적인 차입니다. 비타민 C가 풍부해 피부 미용에 좋고 활력을 불어넣어 줍니다.", icon: "🌺" },
   black: { title: "홍차 (Black Tea)", desc: "깊고 풍부한 바디감을 가진 차입니다. 은은한 카페인이 각성을 도와주며, 달콤한 디저트와 곁들이기에 환상의 궁합입니다.", icon: "🍂" },
 };
-import { useEffect, useState } from "react";
 
-type SubmitKind = "tip" | "worry";
-
+// 1. 기존에 작성하셨던 SubmissionForm 컴포넌트 (원본과 100% 완전히 일치)
 export function SubmissionForm({
   kind,
   label,
@@ -126,17 +128,16 @@ export function SubmissionForm({
   );
 }
 
-// 💡 파일 맨 마지막 줄 아래에 이어서 붙여넣으세요.
+// 2. 💡 새로 생성되는 탭 전환 및 메인 컨트롤 컴포넌트
 export default function HomeClient() {
-  // 현재 활성화된 탭 상태 ('submit' = 기존 제출 폼, 'quiz' = 차 추천 퀴즈)
-  const [activeTab, setActiveTab] = useState<'submit' | 'quiz'>('submit');
+  // 현재 보고 있는 서브 메뉴 상태 ('form' = 기존 작성하신 양식, 'quiz' = 차 추천 퀴즈)
+  const [viewMode, setViewMode] = useState<'form' | 'quiz'>('form');
 
-  // 퀴즈 진행 관련 상태들
+  // 퀴즈 내부 상태 관리
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [quizResult, setQuizResult] = useState<typeof TEA_RESULTS[string] | null>(null);
 
-  // 퀴즈 보기 선택 시 점수 계산 함수
   const handleOptionClick = (scoreUpdate: Record<string, number>) => {
     const newScores = { ...scores };
     Object.entries(scoreUpdate).forEach(([tea, val]) => {
@@ -147,7 +148,6 @@ export default function HomeClient() {
     if (currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      // 최고 점수를 획득한 차 종류 계산
       let maxScore = -1;
       let selectedTea = 'camomile';
 
@@ -157,12 +157,10 @@ export default function HomeClient() {
           selectedTea = tea;
         }
       });
-
       setQuizResult(TEA_RESULTS[selectedTea]);
     }
   };
 
-  // 퀴즈 초기화 함수
   const resetQuiz = () => {
     setCurrentQuestionIndex(0);
     setScores({});
@@ -170,116 +168,108 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: "600px", margin: "0 auto", padding: "20px" }}>
-      
-      {/* 1. 상단 탭 네비게이션 */}
-      <div className="tab-navigation" style={{ display: "flex", borderBottom: "2px solid #eee", marginBottom: "24px", gap: "10px" }}>
+    <div style={{ width: "100%" }}>
+      {/* 상단 탭 전환 선택 영역 (기존 폼 양식 상단에 나란히 배치) */}
+      <div style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
         <button
-          onClick={() => setActiveTab('submit')}
+          onClick={() => setViewMode('form')}
           style={{
             flex: 1,
             padding: "12px",
+            borderRadius: "6px",
+            border: viewMode === 'form' ? "2px solid #10b981" : "1px solid #ddd",
+            backgroundColor: viewMode === 'form' ? "#e6f4ea" : "#fff",
+            color: viewMode === 'form' ? "#137333" : "#555",
+            fontWeight: "bold",
             cursor: "pointer",
-            border: "none",
-            borderBottom: activeTab === 'submit' ? "3px solid #10b981" : "3px solid transparent",
-            background: "none",
-            fontWeight: activeTab === 'submit' ? "bold" : "normal",
-            color: activeTab === 'submit' ? "#10b981" : "#666"
+            fontSize: "14px"
           }}
         >
-          📝 고민 & 꿀팁 제출
+          📝 수험 팁 & 고민 제출
         </button>
         <button
-          onClick={() => setActiveTab('quiz')}
+          onClick={() => setViewMode('quiz')}
           style={{
             flex: 1,
             padding: "12px",
+            borderRadius: "6px",
+            border: viewMode === 'quiz' ? "2px solid #10b981" : "1px solid #ddd",
+            backgroundColor: viewMode === 'quiz' ? "#e6f4ea" : "#fff",
+            color: viewMode === 'quiz' ? "#137333" : "#555",
+            fontWeight: "bold",
             cursor: "pointer",
-            border: "none",
-            borderBottom: activeTab === 'quiz' ? "3px solid #10b981" : "3px solid transparent",
-            background: "none",
-            fontWeight: activeTab === 'quiz' ? "bold" : "normal",
-            color: activeTab === 'quiz' ? "#10b981" : "#666"
+            fontSize: "14px"
           }}
         >
-          🍵 나만의 차(Tea) 찾기
+          🍵 나만의 차(Tea) 추천 퀴즈
         </button>
       </div>
 
-      {/* 2. 첫 번째 탭: 기존 구조의 화면을 그대로 불러옴 (기존 기능이 보존되는 영역) */}
-      {activeTab === 'submit' && (
+      {/* [1] 원래 화면 상태: 기존 작성하신 폼 내용(고민 나누기, 꿀팁 공유)이 그대로 살아 움직입니다. */}
+      {viewMode === 'form' && (
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <SubmissionForm kind="worry" label="😥 고민 나누기" placeholder="요즘 어떤 고민이 있으신가요?" />
-          <SubmissionForm kind="tip" label="💡 공부 꿀팁 공유" placeholder="나만의 공부 비법을 알려주세요!" includeNickname />
+          <SubmissionForm kind="worry" label="😥 고민 나누기" placeholder="요즘 어떤 고민이 있으신가요? 마음껏 털어놓아 보세요." />
+          <SubmissionForm kind="tip" label="💡 공부 꿀팁 공유" placeholder="나만 알고 있는 효과적인 공부 비법을 알려주세요!" includeNickname />
         </div>
       )}
 
-      {/* 3. 두 번째 탭: 새로 추가된 차 추천 퀴즈 영역 */}
-      {activeTab === 'quiz' && (
-        <div className="panel" style={{ padding: "24px", borderRadius: "8px", background: "#fff", border: "1px solid #eee" }}>
-          {!quizResult ? (
-            /* 퀴즈 진행 중 화면 */
-            <div>
-              <div style={{ textAlign: "center", marginBottom: "20px" }}>
-                <span style={{ background: "#e6f4ea", color: "#137333", padding: "4px 12px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
-                  질문 {QUIZ_QUESTIONS[currentQuestionIndex].id} / {QUIZ_QUESTIONS.length}
-                </span>
-                <h3 style={{ marginTop: "12px", fontSize: "18px", color: "#333" }}>
-                  {QUIZ_QUESTIONS[currentQuestionIndex].question}
-                </h3>
-              </div>
+      {/* [2] 차 추천 상태: 탭을 클릭하면 아래쪽에 퀴즈 설문판이 나타납니다. */}
+      {viewMode === 'quiz' && (
+        <div className="panel" style={{ padding: "24px" }}>
+          <div className="panel-body">
+            {!quizResult ? (
+              /* 질문 선택 중 화면 */
+              <div>
+                <div style={{ textAlign: "center", marginBottom: "20px" }}>
+                  <span style={{ background: "#e6f4ea", color: "#137333", padding: "4px 12px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
+                    질문 {QUIZ_QUESTIONS[currentQuestionIndex].id} / {QUIZ_QUESTIONS.length}
+                  </span>
+                  <h3 style={{ marginTop: "12px", fontSize: "17px", color: "#333" }}>
+                    {QUIZ_QUESTIONS[currentQuestionIndex].question}
+                  </h3>
+                </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {QUIZ_QUESTIONS[currentQuestionIndex].options.map((option, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => handleOptionClick(option.score)}
-                    style={{
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "14px",
-                      borderRadius: "6px",
-                      border: "1px solid #ddd",
-                      backgroundColor: "#fcfcfc",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      transition: "all 0.2s"
-                    }}
-                    onMouseOver={(e) => (e.currentTarget.style.borderColor = "#10b981")}
-                    onMouseOut={(e) => (e.currentTarget.style.borderColor = "#ddd")}
-                  >
-                    {option.text}
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  {QUIZ_QUESTIONS[currentQuestionIndex].options.map((option, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleOptionClick(option.score)}
+                      style={{
+                        width: "100%",
+                        textAlign: "left",
+                        padding: "14px",
+                        borderRadius: "6px",
+                        border: "1px solid #ddd",
+                        backgroundColor: "#fcfcfc",
+                        cursor: "pointer",
+                        fontSize: "14px",
+                        color: "#444"
+                      }}
+                    >
+                      {option.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              /* 결과 도출 화면 */
+              <div style={{ textAlign: "center", padding: "10px 0" }}>
+                <div style={{ fontSize: "50px", marginBottom: "10px" }}>{quizResult.icon}</div>
+                <p style={{ color: "#10b981", fontWeight: "bold", fontSize: "14px", margin: "0" }}>당신에게 딱 맞는 차는?</p>
+                <h2 style={{ fontSize: "24px", margin: "8px 0 20px 0", color: "#222" }}>{quizResult.title}</h2>
+
+                <div style={{ background: "#f9f9f9", padding: "16px", borderRadius: "6px", border: "1px solid #f0f0f0", color: "#555", fontSize: "14px", lineHeight: "1.6", marginBottom: "24px", textAlign: "left" }}>
+                  {quizResult.desc}
+                </div>
+
+                <div className="submit-row" style={{ justifyContent: "center" }}>
+                  <button className="submit-button" onClick={resetQuiz} style={{ float: "none" }}>
+                    🔄 다시 테스트하기
                   </button>
-                ))}
+                </div>
               </div>
-            </div>
-          ) : (
-            /* 퀴즈 결과 화면 */
-            <div style={{ textAlign: "center", padding: "10px 0" }}>
-              <div style={{ fontSize: "50px", marginBottom: "10px" }}>{quizResult.icon}</div>
-              <p style={{ color: "#10b981", fontWeight: "bold", fontSize: "14px", margin: "0" }}>당신에게 딱 맞는 차는?</p>
-              <h2 style={{ fontSize: "24px", margin: "8px 0 20px 0", color: "#222" }}>{quizResult.title}</h2>
-
-              <div style={{ background: "#f9f9f9", padding: "16px", borderRadius: "6px", border: "1px solid #f0f0f0", color: "#555", fontSize: "14px", lineHeight: "1.6", marginBottom: "24px" }}>
-                {quizResult.desc}
-              </div>
-
-              <button
-                onClick={resetQuiz}
-                style={{
-                  backgroundColor: "#333",
-                  color: "#fff",
-                  border: "none",
-                  padding: "10px 20px",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  fontSize: "14px"
-                }}
-              >
-                🔄 다시 테스트하기
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </div>
