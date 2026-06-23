@@ -201,7 +201,7 @@ export default function HomeClient() {
             fontSize: "14px"
           }}
         >
-          🍵 나만의 차(Tea) 추천 퀴즈
+          🍵 나만의 차(Tea) 추천
         </button>
       </div>
 
@@ -253,7 +253,7 @@ export default function HomeClient() {
               /* 결과 도출 화면 */
               <div style={{ textAlign: "center", padding: "10px 0" }}>
                 <div style={{ fontSize: "50px", marginBottom: "10px" }}>{quizResult.icon}</div>
-                <p style={{ color: "#10b981", fontWeight: "bold", fontSize: "14px", margin: "0" }}>당신에게 딱 맞는 차는?</p>
+                <p style={{ color: "#95b667", fontWeight: "bold", fontSize: "18px", margin: "0" }}>당신에게 딱 맞는 차는?</p>
                 <h2 style={{ fontSize: "24px", margin: "8px 0 20px 0", color: "#222" }}>{quizResult.title}</h2>
 
                 <div style={{ background: "#f9f9f9", padding: "16px", borderRadius: "6px", border: "1px solid #f0f0f0", color: "#555", fontSize: "14px", lineHeight: "1.6", marginBottom: "24px", textAlign: "left" }}>
