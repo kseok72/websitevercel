@@ -219,8 +219,9 @@ a {
   min-height: 240px;
   font-size: 18px;       /* 원하는 글씨 크기 (예: 18px, 20px 등) */
   color: #000000;        /* 원하는 글씨 색상 (예: 노란색 #f5bd4f 또는 연그린 #c9f0c6) */
-  line-height: 1.8;      /* 줄간격을 넓혀서 보기 편하게 만듭니다 */
-  margin-bottom: 12px;   /* 번호별 간격을 살짝 띄워줍니다 */
+  line-height: 2.2;      /* 줄간격을 넓혀서 보기 편하게 만듭니다 */
+  margin-bottom: 12px;
+  font-family: "Gamja Flower", sans-serif;/* 번호별 간격을 살짝 띄워줍니다 */
 }
 
 .field {
